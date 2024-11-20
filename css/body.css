@@ -11,7 +11,7 @@ body {
     min-height: 100vh;
     --sz: 15px;
     --c0: #050505;
-    --c1: #837226;
+    --c1: #3e573a;
     --ts: 50% / calc(var(--sz) * 8) calc(var(--sz) * 16);
     margin: 0;
     padding: 0;
@@ -75,13 +75,13 @@ body {
 
 button {
     font-size: 1.5rem;
-    color: #fafafa;
+    color: #3d3741;
     text-transform: uppercase;
     padding: 10px 20px;
     border-radius: 10px;
-    border: 2px solid #fafafa;
-    background: #899706;
-    box-shadow: 3px 3px #fafafa;
+    border: 2px solid #020101;
+    background: #fae27a;
+    box-shadow: 3px 3px #161313;
     cursor: pointer;
     margin: 35px 0;
   } */
@@ -91,3 +91,50 @@ button {
     transform: translate(3px, 3px);
   }
   
+  h1 {
+    align-items: center ;
+    font-family: 'Poppins', sans-serif; /* Fallback to sans-serif */
+    font-size: 3rem; /* Adjust the size as needed */
+    color: #f4f8f3; /* Match or complement your background color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Optional: Adds a slight shadow for emphasis */
+    margin: 0.5em 0;
+}
+.ascii-art {
+    border: 3px solid #333; /* Solid border with dark color */
+    padding: 15px; /* Add some padding inside the border */
+    margin-top: 20px; /* Space between ASCII art and other elements */
+    background-color: #2b3130; /* Light background color for contrast */
+    white-space: pre-wrap; /* Make sure text wraps if it's too long */
+    overflow-x: auto; /* Horizontal scroll if the ASCII art is too wide */
+    font-family: 'Courier New', Courier, monospace; /* Monospaced font for better alignment */
+    font-size: 14px; /* Font size for readability */
+    color: #fdfbfb; /* Dark text color for contrast */
+}
+
+.input {
+  background-color: #383838;
+  border: 1ex solid none;
+  border-top-width: 1.7em;
+  margin: 0;
+  padding: 0;
+  color: #383838;
+  word-wrap: break-word;
+  outline: 7px solid #383838;
+  height: 30px;
+  font-size: 17px;
+  text-align: center;
+  transition: all 1s;
+  max-width: 190px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+ }
+ 
+ .input:hover {
+  border-top-width: 0.2em;
+  background-color: #f1e8e8;
+ }
+ 
+ .input:focus {
+  border-top-width: 0.2em;
+  background-color: #f1e8e8;
+ }
