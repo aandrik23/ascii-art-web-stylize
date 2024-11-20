@@ -22,9 +22,9 @@ button {
     box-shadow: 3px 3px #fafafa;
     cursor: pointer;
     margin: 35px 0;
-  }
+  } */
   
-  button:active {
+ button:active {
     box-shadow: none;
     transform: translate(3px, 3px);
   }
