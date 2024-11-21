@@ -17,14 +17,53 @@
             <div>
                 <input  class="input" autofocus type="text" id="text" name="text" required placeholder="Your text"><br><br>
             </div>
-            </div>   
+               
 
-            <label for="banner">Select Banner:</label><br>
-            <select id="banner" name="banner">
-                <option value="standard" {{if eq .Banner "standard"}}selected{{end}}>Standard</option>
-                <option value="shadow" {{if eq .Banner "shadow"}}selected{{end}}>Shadow</option>
-                <option value="thinkertoy" {{if eq .Banner "thinkertoy"}}selected{{end}}>Thinkertoy</option>
-            </select><br><br>
+           
+            <div class="banner-selection">
+                <label for="banner">Choose Your Banner Style:</label>
+                <div class="banner-options">
+                    <!-- Standard Option -->
+                    <input 
+                        id="standard" 
+                        type="radio" 
+                        name="banner" 
+                        value="standard" 
+                        class="banner-radio" 
+                        checked
+                    />
+                    <label for="standard" class="banner-card">
+                        <div class="banner-title">Standard</div>
+                        <div class="banner-description">Classic ASCII art style.</div>
+                    </label>
+            
+                    <!-- Shadow Option -->
+                    <input 
+                        id="shadow" 
+                        type="radio" 
+                        name="banner" 
+                        value="shadow" 
+                        class="banner-radio"
+                    />
+                    <label for="shadow" class="banner-card">
+                        <div class="banner-title">Shadow</div>
+                        <div class="banner-description">Stylish shadow effects.</div>
+                    </label>
+            
+                    <!-- Thinkertoy Option -->
+                    <input 
+                        id="thinkertoy" 
+                        type="radio" 
+                        name="banner" 
+                        value="thinkertoy" 
+                        class="banner-radio"
+                    />
+                    <label for="thinkertoy" class="banner-card">
+                        <div class="banner-title">Thinkertoy</div>
+                        <div class="banner-description">Fun and quirky design.</div>
+                    </label>
+                </div>
+            </div>
             
             <button>Create</button>
         </form>
