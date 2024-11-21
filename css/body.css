@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 
 
     color: #e2d8d8;
@@ -16,7 +17,7 @@ body {
     --ts: 50% / calc(var(--sz) * 8) calc(var(--sz) * 16);
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    
     --dot: var(--c1) 0 calc(var(--sz) * 0.78),
       #fff0 calc(calc(var(--sz) * 0.78) + 1px) 100%;
     --dot2: radial-gradient(circle at 90% 0%, var(--dot)) var(--ts),
@@ -101,16 +102,21 @@ button {
     margin: 0.5em 0;
 }
 .ascii-art {
-    border: 3px solid #333; /* Solid border with dark color */
-    padding: 15px; /* Add some padding inside the border */
-    margin-top: 20px; /* Space between ASCII art and other elements */
-    background-color: #2b3130; /* Light background color for contrast */
-    white-space: pre-wrap; /* Make sure text wraps if it's too long */
-    overflow-x: auto; /* Horizontal scroll if the ASCII art is too wide */
-    font-family: 'Courier New', Courier, monospace; /* Monospaced font for better alignment */
-    font-size: 14px; /* Font size for readability */
-    color: #fdfbfb; /* Dark text color for contrast */
+  border: 3px solid #333; /* Solid border with a color */
+  padding: 15px; /* Padding for spacing inside the border */
+  margin: 20px auto; /* Center the output and add vertical spacing */
+  background-color: #2b3130; /* Background color for contrast */
+  overflow-y: auto;
+  overflow-x: auto; /* Prevent horizontal scrolling */
+  font-family: 'Courier New', Courier, monospace; /* Monospaced font for alignment */
+  font-size: 14px; /* Font size for readability */
+  color: #fdfbfb; /* Text color */
+  width: 80%; /* Set width relative to window size */
+  max-width: 1200px; /* Limit the maximum size */
+  height: auto; /* Allow height to adjust based on content */
+  max-height: 60vh; /* Limit height to 60% of the viewport */
 }
+
 
 .input {
   background-color: #383838;
@@ -205,4 +211,47 @@ button {
 .banner-description {
     font-size: 0.9rem;
     color: #c7c9c8;
+}
+
+
+textarea.input {
+  background-color: #383838;
+  color: #110b0b;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  resize: vertical; /* Allow resizing vertically but not horizontally */
+  width: 100%;
+  max-width: 400px;
+}
+
+
+.info-bubble {
+  display: none; /* Initially hidden */
+  position: absolute;
+  background-color: #cc9d45;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #333;
+  max-width: 250px;
+  z-index: 10;
+  transition: opacity 0.4s ease;
+}
+
+/* Arrow for the bubble pointing to the text area */
+.info-bubble::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #f9f9f9 transparent transparent;
 }

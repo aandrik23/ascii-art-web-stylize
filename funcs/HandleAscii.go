@@ -45,7 +45,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// Process the banner file content
 	fileContent := strings.ReplaceAll(string(file), "\r\n", "\n")
 	lines := strings.Split(fileContent, "\n")
-	requestLines := strings.Split(text, "\\n")
+	requestLines := strings.Split(text, "\n")
 
 	// Generate ASCII art
 	asciiArt, err := PrintAsciiArt(requestLines, lines)

@@ -9,17 +9,22 @@ import (
 func PrintAsciiArt(sentences []string, textFile []string) (string, error) {
 	var result strings.Builder // Use strings.Builder to build the ASCII art output
 
-	for i, word := range sentences {
+	for _, word := range sentences {
 		if word == "" {
-			if i != 0 {
-				result.WriteString("\n") // Add a new line for blank words
-			}
+			// Add a newline for blank words
+			result.WriteString("\n")
 			continue
 		}
 
 		// Generate ASCII art for each line of height (assume height is 8)
 		for h := 1; h < 9; h++ { // ASCII art character height is 8
 			for _, char := range word {
+				if char == '\n' {
+					// If the character is a newline, just add a newline in the output
+					result.WriteString("\n")
+					continue
+				}
+
 				charIndex := int(char) - 32  // Calculate the index for the character in the ASCII art file
 				startLine := charIndex*9 + h // Calculate the line index for the current character and height
 

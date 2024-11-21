@@ -6,20 +6,25 @@
     <title>ASCII Art Generator</title>
     <link href="/css/body.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <script src="/JavaScript/enter.js" defer></script>
 </head>
 
 <body align="center">
     <main>
         <h1>ASCII Art Generator</h1>
         <form action="/" method="POST">
-            
-                <label for="text">Enter Text:</label><br><br>
             <div>
-                <input  class="input" autofocus type="text" id="text" name="text" required placeholder="Your text"><br><br>
+                <textarea 
+                    class="input" 
+                    id="text" 
+                    name="text" 
+                    rows="5" 
+                    cols="30" 
+                    placeholder="Your text here" 
+                    required
+                ></textarea><br><br>
             </div>
-               
 
-           
             <div class="banner-selection">
                 <label for="banner">Choose Your Banner Style:</label>
                 <div class="banner-options">
@@ -80,9 +85,13 @@
         <pre class="ascii-art">{{.AsciiArt}}</pre>
         {{end}}
     </main>
+    <div id="info-bubble" class="info-bubble">
+        Did you know that \n represents the enter button in programming?
+    </div>
+   
+
+
+    
+    
 </body>
-</html>
-
-
-
 </html>
