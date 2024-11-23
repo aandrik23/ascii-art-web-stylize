@@ -7,10 +7,11 @@ import (
 	"strings"
 )
 
+// AsciiArtHandler handles ASCII art generation requests.
 func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// Ensure the request is a POST request
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusBadRequest)
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -28,15 +29,19 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Validate input (only allow ASCII printable characters and newline)
+	if !isValidASCII(text) {
+		http.Error(w, "Text contains invalid characters. Only printable ASCII characters are allowed.", http.StatusBadRequest)
+		return
+	}
+
 	// Check if the banner file exists
 	bannerFilePath := "./banners/" + banner + ".txt"
 	file, err := os.ReadFile(bannerFilePath)
 	if err != nil {
-		// If the error is due to file not being found, return 404
 		if os.IsNotExist(err) {
 			http.Error(w, "Banner file not found", http.StatusNotFound)
 		} else {
-			// Any other error, like permissions or file system issues, should be 500
 			http.Error(w, "Internal server error while reading banner file", http.StatusInternalServerError)
 		}
 		return
@@ -54,7 +59,17 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Send the generated ASCII art as plain text (no <pre> tags)
-
+	// Send the generated ASCII art as plain text
+	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprint(w, asciiArt)
+}
+
+// Helper function to validate input as printable ASCII (32-126 or newlines)
+func isValidASCII(s string) bool {
+	for _, c := range s {
+		if (c < 32 || c > 126) && c != '\n' {
+			return false
+		}
+	}
+	return true
 }

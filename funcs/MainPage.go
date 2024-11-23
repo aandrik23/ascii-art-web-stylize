@@ -9,9 +9,10 @@ import (
 	"strings"
 )
 
+// MainPageHandler serves the main page and processes form submissions.
 func MainPageHandler(w http.ResponseWriter, r *http.Request) {
+	// Redirect to 404 if the path is not "/"
 	if r.URL.Path != "/" {
-
 		NotFoundHandler(w, r)
 		return
 	}
@@ -48,39 +49,61 @@ func MainPageHandler(w http.ResponseWriter, r *http.Request) {
 		data.Text = r.FormValue("text")
 		data.Banner = r.FormValue("banner")
 
-		// Check for missing values
+		// Validate input
 		if data.Text == "" || data.Banner == "" {
 			data.HasError = true
-			data.Error = "Both text and banner must be provided."
-		} else {
-			// Check if banner file exists
-			bannerFilePath := "./banners/" + data.Banner + ".txt"
-			file, err := os.ReadFile(bannerFilePath)
-			if err != nil {
-				data.HasError = true
-				if os.IsNotExist(err) {
-					data.Error = "Banner file not found."
-				} else {
-					data.Error = "Internal server error while reading banner file."
-				}
-			} else {
-				// Process the ASCII art generation
-				fileContent := strings.ReplaceAll(string(file), "\r\n", "\n")
-				lines := strings.Split(fileContent, "\n")
-				requestLines := strings.Split(data.Text, "\\n")
+			data.Error = "Text or banner must be provided."
+			w.WriteHeader(http.StatusBadRequest) // Set 400 status
+			renderTemplate(w, tmpl, data)
+			return
+		}
 
-				asciiArt, err := PrintAsciiArt(requestLines, lines)
-				if err != nil {
-					data.HasError = true
-					data.Error = "Error generating ASCII art: " + err.Error()
-				} else {
-					data.AsciiArt = asciiArt
-				}
+		// Validate ASCII characters in the text
+		if !isValidASCII(data.Text) {
+			data.HasError = true
+			data.Error = "Text contains invalid characters. Only printable ASCII characters are allowed."
+			w.WriteHeader(http.StatusBadRequest) // Set 400 status
+			renderTemplate(w, tmpl, data)
+			return
+		}
+
+		// Check if banner file exists
+		bannerFilePath := "./banners/" + data.Banner + ".txt"
+		file, err := os.ReadFile(bannerFilePath)
+		if err != nil {
+			data.HasError = true
+			if os.IsNotExist(err) {
+				data.Error = "Banner file not found."
+				w.WriteHeader(http.StatusInternalServerError) // Set 404 status
+			} else {
+				data.Error = "Internal server error while reading banner file."
+				w.WriteHeader(http.StatusInternalServerError) // Set 500 status
 			}
+			renderTemplate(w, tmpl, data)
+			return
+		}
+
+		// Process ASCII art generation
+		fileContent := strings.ReplaceAll(string(file), "\r\n", "\n")
+		lines := strings.Split(fileContent, "\n")
+		requestLines := strings.Split(data.Text, "\n")
+
+		asciiArt, err := PrintAsciiArt(requestLines, lines)
+		if err != nil {
+			data.HasError = true
+			data.Error = "Error generating ASCII art: " + err.Error()
+			w.WriteHeader(http.StatusInternalServerError) // Set 500 status
+		} else {
+			data.AsciiArt = asciiArt
 		}
 	}
 
-	// Render the template with the data
+	// Render the template with data
+	renderTemplate(w, tmpl, data)
+}
+
+// Helper function to render templates
+func renderTemplate(w http.ResponseWriter, tmpl *template.Template, data interface{}) {
 	if err := tmpl.Execute(w, data); err != nil {
 		http.Error(w, "Failed to render template", http.StatusInternalServerError)
 		log.Println("Error rendering template:", err)
